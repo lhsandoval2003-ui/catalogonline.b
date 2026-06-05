@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo Demo Pro - Variedades El Centro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-light: #f7f9fc;
+      --bg-white: #ffffff;
+      --primary: #ff6b6b; /* Coral Vibrante */
+      --secondary: #4ecdc4; /* Turquesa */
+      --dark: #2d3748;
+      --text-main: #2d3748;
+      --text-muted: #718096;
+      --whatsapp: #25D366;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Encabezado Limpio y Colorido */
+    header {
+      text-align: center;
+      padding: 50px 20px 30px 20px;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .shop-logo {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    header h1 {
+      margin: 5px 0;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    header p {
+      margin: 10px 0 0 0;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Grid del Catálogo */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 30px;
+      padding: 40px 0;
+    }
+
+    /* Tarjetas del Catálogo de $20 */
+    .card {
+      background: var(--bg-white);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #edf2f7;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+      border-color: var(--secondary);
+    }
+
+    /* Contenedor de Imagen */
+    .card-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      background-color: #f1f5f9;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Badges de impacto incluidos en el Plan Pro */
+    .tag-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .badge-hot { background-color: var(--primary); }
+    .badge-envio { background-color: var(--secondary); }
+    .badge-promo { background-color: #f6ad55; color: #fff; }
+    .badge-nuevo { background-color: #4299e1; }
+
+    /* Información de los productos */
+    .card-info {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.25rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+
+    .card .description {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0 0 20px 0;
+      line-height: 1.5;
+      flex-grow: 1;
+      height: 65px;
+      overflow: hidden;
+    }
+
+    /* Área de Precio */
+    .price-box {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 18px;
+    }
+
+    /* Botón Profesional de Pedido */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: var(--whatsapp);
+      color: white;
+      padding: 13px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #1ebd59;
+    }
+
+    /* Sección Informativa Local (Valor agregado del Plan Pro) */
+    .shipping-info {
+      background-color: var(--bg-white);
+      border-radius: 20px;
+      padding: 30px;
+      margin: 20px 0 60px 0;
+      border: 1px solid #edf2f7;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    }
+
+    .shipping-info h3 {
+      margin-top: 0;
+      color: var(--dark);
+    }
+
+    .shipping-grid {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .shipping-item {
+      max-width: 250px;
+    }
+
+    .shipping-item span {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    /* Pie de página */
+    footer {
+      background: var(--bg-white);
+      color: var(--text-muted);
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="shop-logo">🛍️</div>
+  <h1>Variedades El Centro</h1>
+  <p>Elige tus artículos favoritos y realiza tu pedido al instante 🇳🇮</p>
+</header>
+
+<div class="container">
+  <div class="catalog-grid">
+
+    <!-- PRODUCTO 1 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-hot">🔥 MÁS VENDIDO</span>
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=500" alt="Mochila Ejecutiva">
+      </div>
+      <div class="card-info">
+        <h3>Mochila Ejecutiva USB</h3>
+        <p class="description">Impermeable de alta gama con compartimento para laptop de 15.6" y puerto de carga externo.</p>
+        <div class="price-box">C$ 850</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20la%20Mochila%20Ejecutiva%20USB%20de%20C%24850" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 2 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-envio">⚡ ENVÍO GRATIS</span>
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=500" alt="Audífonos Bluetooth">
+      </div>
+      <div class="card-info">
+        <h3>Audífonos Bluetooth Pro</h3>
+        <p class="description">Cancelación acústica activa de ruido, almohadillas ergonómicas y sonido de alta fidelidad.</p>
+        <div class="price-box">C$ 1,200</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20los%20Aud%C3%ADfonos%20Bluetooth%20Pro%20de%20C%241%2C200" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 3 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-promo">📉 15% REBAJA</span>
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=500" alt="Zapatillas Deportivas">
+      </div>
+      <div class="card-info">
+        <h3>Zapatillas Urbanas Run</h3>
+        <p class="description">Suela aerodinámica de goma elástica y malla transpirable para máximo confort diario.</p>
+        <div class="price-box">C$ 1,650</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20las%20Zapatillas%20Urbanas%20Run%20de%20C%241%2C650" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 4 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-nuevo">✨ NUEVO</span>
+        <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=500" alt="Termo Acero Inoxidable">
+      </div>
+      <div class="card-info">
+        <h3>Termo Térmico 40oz</h3>
+        <p class="description">Construcción reforzada de acero inoxidable. Mantiene tus líquidos fríos hasta por 24 horas.</p>
+        <div class="price-box">C$ 550</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20el%20Termo%20Acero%20Inoxidable%20de%20C%24550" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 5 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-hot">🔥 DESTACADO</span>
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=500" alt="Reloj Inteligente">
+      </div>
+      <div class="card-info">
+        <h3>Smartwatch Series 8</h3>
+        <p class="description">Pantalla infinita con sensores de salud, monitoreo deportivo y alta resistencia al agua.</p>
+        <div class="price-box">C$ 1,890</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20el%20Smartwatch%20Series%208%20de%20C%241%2C890" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 6 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=500" alt="Gafas de Sol">
+      </div>
+      <div class="card-info">
+        <h3>Gafas de Sol Clásicas</h3>
+        <p class="description">Lentes polarizados con filtro UV400 para protección completa contra los rayos del sol.</p>
+        <div class="price-box">C$ 420</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20las%20Gafas%20de%20Sol%20de%20C%24420" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 7 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=500" alt="Gorra Deportiva">
+      </div>
+      <div class="card-info">
+        <h3>Gorra Sport Ajustable</h3>
+        <p class="description">Tejido ultraligero de secado rápido con paneles transpirables, ideal para el día a día.</p>
+        <div class="price-box">C$ 350</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20la%20Gorra%20Deportiva%20de%20C%24350" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 8 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-nuevo">✨ PREMIUM</span>
+        <img src="https://images.unsplash.com/photo-1627124112125-345f08ce4527?q=80&w=500" alt="Billetera de Cuero">
+      </div>
+      <div class="card-info">
+        <h3>Billetera de Cuero Genuino</h3>
+        <p class="description">Cortes artesanales finos con tecnología de protección RFID contra clonación de tarjetas.</p>
+        <div class="price-box">C$ 680</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20la%20Billetera%20de%20Cuero%20de%20C%24680" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 9 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=500" alt="Soporte para Laptop">
+      </div>
+      <div class="card-info">
+        <h3>Soporte Ergonómico</h3>
+        <p class="description">Estructura pura de aluminio plegable. Dispone de múltiples ángulos de inclinación regulables.</p>
+        <div class="price-box">C$ 490</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20el%20Soporte%20Ergon%C3%B3mico%20de%20C%24490" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 10 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=500" alt="Zapatos Casuales">
+      </div>
+      <div class="card-info">
+        <h3>Zapatos Casuales Urbanos</h3>
+        <p class="description">Diseño contemporáneo minimalista, excelente flexibilidad y comodidad para largas jornadas.</p>
+        <div class="price-box">C$ 1,450</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20los%20Zapatos%20Casuales%20de%20C%241%2C450" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 11 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-hot">🔥 RECOMENDADO</span>
+        <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?q=80&w=500" alt="Mouse Gamer">
+      </div>
+      <div class="card-info">
+        <h3>Mouse Gamer RGB</h3>
+        <p class="description">Sensor óptico de alta precisión, diseño ergonómico y patrones de luces RGB dinámicas.</p>
+        <div class="price-box">C$ 580</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20el%20Mouse%20Gamer%20RGB%20de%20C%24580" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 12 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=500" alt="Smartband">
+      </div>
+      <div class="card-info">
+        <h3>Smartband Deportiva</h3>
+        <p class="description">Pantalla a color de alta resolución con lecturas de ritmo cardíaco y pasos diarios.</p>
+        <div class="price-box">C$ 950</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20la%20Banda%20Inteligente%20de%20C%24950" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 13 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=500" alt="Audífonos Inalámbricos">
+      </div>
+      <div class="card-info">
+        <h3>Audífonos In-Ear Wireless</h3>
+        <p class="description">Conectividad inalámbrica estable, estuche de carga compacto y micrófono para llamadas.</p>
+        <div class="price-box">C$ 750</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20los%20Aud%C3%ADfonos%20In-Ear%20de%20C%24750" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 14 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-envio">⚡ ENVÍO GRATIS</span>
+        <img src="https://images.unsplash.com/photo-1615397349754-cfa2066a298e?q=80&w=500" alt="Perfume Masculino">
+      </div>
+      <div class="card-info">
+        <h3>Perfume Blue Ocean EAU</h3>
+        <p class="description">Fragancia masculina de larga duración con notas oceánicas refrescantes y fondo amaderado.</p>
+        <div class="price-box">C$ 1,150</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20el%20Perfume%20Blue%20Ocean%20de%20C%241%2C150" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 15 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=500" alt="Aro de Luz Led">
+      </div>
+      <div class="card-info">
+        <h3>Aro de Luz LED + Trípode</h3>
+        <p class="description">Iluminación de 10 pulgadas regulable en 3 tonalidades, idóneo para transmisiones y fotos claras.</p>
+        <div class="price-box">C$ 620</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20el%20Aro%20de%20Luz%20LED%20de%20C%24620" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 16 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?q=80&w=500" alt="Perfume Femenino">
+      </div>
+      <div class="card-info">
+        <h3>Perfume Floral Bloom</h3>
+        <p class="description">Fragancia sofisticada y sutil elaborada con esencias de jazmín y toques de vainilla dulce.</p>
+        <div class="price-box">C$ 1,250</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20el%20Perfume%20Floral%20Bloom%20de%20C%241%2C250" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 17 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=500" alt="Humidificador">
+      </div>
+      <div class="card-info">
+        <h3>Difusor Humidificador</h3>
+        <p class="description">Dispositivo ultrasónico silencioso de niebla fina con luces LED ambientales de descanso.</p>
+        <div class="price-box">C$ 590</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20el%20Difusor%20de%20Aroma%20de%20C%24590" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 18 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-hot">🔥 IMPRESCINDIBLE</span>
+        <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?q=80&w=500" alt="Powerbank">
+      </div>
+      <div class="card-info">
+        <h3>Powerbank Fast Charge</h3>
+        <p class="description">Batería portátil de 20,000 mAh de alta capacidad. Ideal para mantener tus equipos activos.</p>
+        <div class="price-box">C$ 890</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20la%20Powerbank%20de%20C%24890" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 19 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <span class="tag-badge badge-promo">💥 EXCLUSIVO</span>
+        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=500" alt="Tacones de mujer">
+      </div>
+      <div class="card-info">
+        <h3>Tacones de Gamuza</h3>
+        <p class="description">Acabado suave y elegante con tacón estructurado para máxima estabilidad en eventos formales.</p>
+        <div class="price-box">C$ 1,580</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20los%20Tacones%20de%20Gamuza%20de%20C%241%2C580" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 20 -->
+    <div class="card">
+      <div class="card-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=500" alt="Zapatos Deportivos Blancos">
+      </div>
+      <div class="card-info">
+        <h3>Zapatillas All-White Sport</h3>
+        <p class="description">Estilo urbano clásico blanco puro, acolchado interior cómodo y material de fácil limpieza.</p>
+        <div class="price-box">C$ 1,720</div>
+        <a class="btn" href="https://wa.me/505XXXXXXXX?text=Hola!%20Me%20interesa%20las%20Zapatillas%20All-White%20de%20C%241%2C720" target="_blank" rel="noopener">
+          💬 Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECCIÓN INFORMATIVA DE ENTREGAS (VALOR AGREGADO) -->
+  <section class="shipping-info">
+    <h3>📦 Información de Entregas y Envíos</h3>
+    <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 20px auto;">Coordinamos tu entrega de forma rápida y segura una vez confirmes tu pedido por WhatsApp.</p>
+    <div class="shipping-grid">
+      <div class="shipping-item">
+        <span>🛵</span>
+        <strong>Entregas Locales</strong>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 5px 0 0 0;">Servicio delivery express directo a tu ubicación.</p>
+      </div>
+      <div class="shipping-item">
+        <span>🚌</span>
+        <strong>Envíos Nacionales</strong>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 5px 0 0 0;">Despachos diarios a departamentos por CargoTrans o buses interlocales.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p><strong>Variedades El Centro</strong></p>
+  <p>Catálogo Digital de demostración — Desarrollado por MiTienditaOnline</p>
+</footer>
+
+</body>
+</html>
