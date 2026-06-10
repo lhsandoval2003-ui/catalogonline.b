@@ -3,166 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxury Noir Collection</title>
+    <title>Catálogo Premium Online</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
     <style>
+        /* -----------------------------------------
+           1. VARIABLES Y CONFIGURACIÓN GENERAL
+        ----------------------------------------- */
         :root {
-            --bg-main: #050505;
-            --bg-card: #121212;
-            --text-p: #f5f5f7;
-            --text-s: #86868b;
-            --accent-gold: #d4af37;
-            --border-line: rgba(255, 255, 255, 0.06);
-            --borde-radius: 8px;
+            --bg-color: #0b0b0c;
+            --surface-color: #16161a;
+            --surface-hover: #222227;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --accent-color: #25d366; /* Verde WhatsApp / Acento */
+            --accent-hover: #20ba5a;
+            --price-color: #4ade80;
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-main); color: var(--text-p); line-height: 1.6; letter-spacing: -0.3px; }
-        header { background-color: rgba(5, 5, 5, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 4rem 1.5rem; text-align: center; border-bottom: 1px solid var(--border-line); position: sticky; top: 0; z-index: 90; }
-        .header-container h1 { font-size: 1.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--text-p); margin-bottom: 0.5rem; }
-        .header-container p { color: var(--text-s); font-size: 0.9rem; letter-spacing: 1px; }
-        .main-container { max-width: 1100px; margin: 4rem auto; padding: 0 1.5rem; margin-bottom: 7rem; }
-        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-        .product-card { background-color: var(--bg-card); border-radius: var(--borde-radius); overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border-line); position: relative; opacity: 0; transform: translateY(15px); animation: fadeIn 0.6s ease forwards; }
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-        
-        /* BADGE ESTILO SELLO DORADO BOUTIQUE */
-        .product-badge { position: absolute; top: 12px; left: 12px; background-color: #000; color: var(--accent-gold); font-size: 0.65rem; font-weight: 600; padding: 5px 12px; border-radius: 0px; z-index: 10; text-transform: uppercase; letter-spacing: 1px; border: 1px solid var(--accent-gold); }
-        
-        .product-img-box { position: relative; width: 100%; padding-top: 110%; background-color: #1a1a1a; overflow: hidden; }
-        .product-img-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .product-info { padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1; text-align: center; }
-        .product-name { font-size: 0.95rem; font-weight: 400; color: var(--text-p); margin-bottom: 0.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.8rem; letter-spacing: 0px; }
-        .product-price { font-size: 1.1rem; font-weight: 600; color: var(--accent-gold); margin-bottom: 1.2rem; }
-        .btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background-color: transparent; color: var(--text-p); border: 1px solid var(--text-p); text-decoration: none; padding: 0.75rem; border-radius: 0px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-top: auto; transition: all 0.3s ease; }
-        .btn-whatsapp svg { width: 14px; height: 14px; fill: currentColor; }
-        footer { background-color: #000; padding: 4rem 1.5rem; text-align: center; border-top: 1px solid var(--border-line); color: var(--text-s); font-size: 0.85rem; }
-        .floating-wa { position: fixed; bottom: 24px; right: 24px; background-color: #10b981; color: white; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); z-index: 100; }
-        .floating-wa svg { width: 24px; height: 24px; fill: white; }
-        @media (min-width: 640px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 1024px) {
-            .products-grid { grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-            .product-card:hover .product-img-box img { transform: scale(1.04); }
-            .btn-whatsapp:hover { background-color: var(--text-p); color: #000; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* -----------------------------------------
+           2. HEADER
+        ----------------------------------------- */
+        header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            animation: fadeIn Down 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #a5a5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        /* -----------------------------------------
+           3. GRID DE PRODUCTOS
+        ----------------------------------------- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            animation: fadeInUps 0.8s ease;
+        }
+
+        /* Tarjeta de Producto */
+        .product-card {
+            background-color: var(--surface-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Contenedor de Imagen y Badge */
+        .image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* Relación de aspecto 1:1 (Cuadrado) */
+            overflow: hidden;
+            background-color: #1e1e24;
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(11, 11, 12, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: #fff;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+
+        /* Detalles del Producto */
+        .product-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+            color: var(--text-main);
+        }
+
+        .product-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--price-color);
+            margin-top: auto;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Botón de Compra */
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--accent-color);
+            color: #000000;
+            text-decoration: none;
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: var(--accent-hover);
+            transform: scale(1.02);
+        }
+
+        .btn-whatsapp svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* -----------------------------------------
+           4. BOTÓN FLOTANTE WSP
+        ----------------------------------------- */
+        .btn-floating {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--accent-color);
+            color: #000;
+            width: 56px;
+            height: 56px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .btn-floating:hover {
+            transform: scale(1.1) rotate(8deg);
+            background-color: var(--accent-hover);
+        }
+
+        .btn-floating svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        /* -----------------------------------------
+           5. ANIMACIONES Y RESPONSIVE
+        ----------------------------------------- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes contentUps {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .products-grid {
+            animation: contentUps 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 2rem; }
+            .container { padding: 1.5rem 1rem; }
+            .products-grid { gap: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-container">
-            <h1>Noir Atelier</h1>
-            <p>Piezas de Edición Limitada • Envíos Globales Privados</p>
-        </div>
-    </header>
+    <div class="container">
+        <header>
+            <h1 id="shop-title">Elegance Store</h1>
+            <p id="shop-subtitle">Catálogo Exclusivo • Envíos Rápidos a todo el país</p>
+        </header>
 
-    <main class="main-container">
-        <div class="products-grid">
+        <main class="products-grid" id="grid-productos">
+            </main>
+    </div>
 
-            <!-- PRODUCTO 1 -->
-            <div class="product-card">
-                <div class="product-badge">En Descuento</div>
-                <div class="product-img-box"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80" alt="Audífonos Premium"></div>
-                <div class="product-info">
-                    <h2 class="product-name">Audífonos Studio Pro Wireless</h2>
-                    <p class="product-price">C$1,850</p>
-                    <a href="#" class="btn-whatsapp" data-name="Audífonos Studio Pro Wireless">Solicitar Pieza</a>
-                </div>
-            </div>
-
-            <!-- PRODUCTO 2 -->
-            <div class="product-card">
-                <div class="product-img-box"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80" alt="Reloj Minimalista"></div>
-                <div class="product-info">
-                    <h2 class="product-name">Reloj de Cuero Classic Gold</h2>
-                    <p class="product-price">C$2,400</p>
-                    <a href="#" class="btn-whatsapp" data-name="Reloj de Cuero Classic Gold">Solicitar Pieza</a>
-                </div>
-            </div>
-
-            <!-- PRODUCTO 3 -->
-            <div class="product-card">
-                <div class="product-badge">En Descuento</div>
-                <div class="product-img-box"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Zapatillas Run"></div>
-                <div class="product-info">
-                    <h2 class="product-name">Zapatillas Air Crimson Edition</h2>
-                    <p class="product-price">C$3,100</p>
-                    <a href="#" class="btn-whatsapp" data-name="Zapatillas Air Crimson Edition">Solicitar Pieza</a>
-                </div>
-            </div>
-
-            <!-- PRODUCTO 4 -->
-            <div class="product-card">
-                <div class="product-img-box"><img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&q=80" alt="Gafas Retro"></div>
-                <div class="product-info">
-                    <h2 class="product-name">Gafas Modern Tortoise Shell</h2>
-                    <p class="product-price">C$950</p>
-                    <a href="#" class="btn-whatsapp" data-name="Gafas Modern Tortoise Shell">Solicitar Pieza</a>
-                </div>
-            </div>
-
-            <!-- PRODUCTO 5 -->
-            <div class="product-card">
-                <div class="product-badge">En Descuento</div>
-                <div class="product-img-box"><img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&q=80" alt="Reloj Cuarzo"></div>
-                <div class="product-info">
-                    <h2 class="product-name">Reloj Elegance Cuarzo Midnight</h2>
-                    <p class="product-price">C$1,900</p>
-                    <a href="#" class="btn-whatsapp" data-name="Reloj Elegance Cuarzo Midnight">Solicitar Pieza</a>
-                </div>
-            </div>
-
-            <!-- PRODUCTO 6 -->
-            <div class="product-card">
-                <div class="product-img-box"><img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=600&q=80" alt="Zapatos Cuero"></div>
-                <div class="product-info">
-                    <h2 class="product-name">Zapatos Formales Oxford Tan</h2>
-                    <p class="product-price">C$3,400</p>
-                    <a href="#" class="btn-whatsapp" data-name="Zapatos Formales Oxford Tan">Solicitar Pieza</a>
-                </div>
-            </div>
-
-            <!-- PRODUCTO 7 -->
-            <div class="product-card">
-                <div class="product-badge">En Descuento</div>
-                <div class="product-img-box"><img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&q=80" alt="Audífonos In-Ear"></div>
-                <div class="product-info">
-                    <h2 class="product-name">Cápsulas de Audio Premium Pro</h2>
-                    <p class="product-price">C$1,200</p>
-                    <a href="#" class="btn-whatsapp" data-name="Cápsulas de Audio Premium Pro">Solicitar Pieza</a>
-                </div>
-            </div>
-
-            <!-- PRODUCTO 8 -->
-            <div class="product-card">
-                <div class="product-img-box"><img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=600&q=80" alt="Perfume Luxury"></div>
-                <div class="product-info">
-                    <h2 class="product-name">Perfume Noir Essence Absolute</h2>
-                    <p class="product-price">C$2,800</p>
-                    <a href="#" class="btn-whatsapp" data-name="Perfume Noir Essence Absolute">Solicitar Pieza</a>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <footer>
-        <p>Atención Exclusiva WhatsApp: +505 8888-8888</p>
-        <p style="margin-top: 0.5rem; color: #444;">&copy; 2026 Noir Atelier SRL. Todos los derechos reservados.</p>
-    </footer>
-
-    <a href="#" class="floating-wa" id="generalWaBtn" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.411 0 11.981 0c3.184.001 6.177 1.242 8.426 3.496 2.249 2.254 3.487 5.251 3.486 8.439-.004 6.634-5.356 11.982-11.926 11.982-2.006-.002-3.975-.508-5.729-1.472L0 24zm6.59-4.846c1.62.962 3.377 1.47 5.32 1.472 5.378 0 9.754-4.372 9.757-9.743.002-2.602-1.012-5.05-2.859-6.898-1.847-1.848-4.3-2.863-6.904-2.864-5.385 0-9.761 4.372-9.764 9.744-.002 2.043.535 4.039 1.556 5.794l-1.023 3.732 3.817-1.001z"/></svg>
+    <a href="#" id="wsp-global" class="btn-floating" target="_blank" aria-label="Contacto general por WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.498 1.451 5.44 1.452 5.4 0 9.794-4.394 9.796-9.793 0-2.614-1.017-5.071-2.865-6.922-1.848-1.85-4.306-2.868-6.92-2.869-5.404 0-9.802 4.394-9.805 9.794-.001 1.97.514 3.893 1.496 5.493l-.992 3.623 3.714-.974zm11.232-4.13c-.302-.15-.1.79-.1.25s-.377-.425-.63-.55c-.252-.125-1.493-.615-1.953-.827-.46-.21-.794-.314-1.128.188-.334.502-1.296 1.632-1.589 1.966-.294.335-.588.376-.89.225-.302-.15-1.273-.47-2.425-1.494-.897-.8-1.502-1.787-1.678-2.088-.176-.302-.019-.465.13-.614.136-.135.302-.35.454-.526.15-.175.2-.301.302-.502.102-.2.05-.376-.025-.526-.075-.15-.627-1.512-.86-2.072-.226-.546-.477-.473-.654-.482t-.36-.01c-.127 0-.335.049-.512.242-.177.194-.675.66-0.675 1.608 0 .949.69 1.867.787 2.001.096.133 1.357 2.071 3.287 2.903.459.198.817.316 1.097.405.461.147.88.126 1.212.077.37-.055 1.128-.462 1.285-.908.156-.447.156-.831.109-.911-.048-.08-.176-.125-.478-.275z"/></svg>
     </a>
 
     <script>
-        const TEL = "50588888888";
-        document.querySelectorAll('.btn-whatsapp').forEach(b => {
-            b.href = `https://wa.me/${TEL}?text=${encodeURIComponent('Hola, deseo solicitar disponibilidad del producto: ' + b.getAttribute('data-name'))}`;
-            b.setAttribute('target', '_blank');
-        });
-        document.getElementById('generalWaBtn').href = `https://wa.me/${TEL}?text=${encodeURIComponent('Hola, me comunico desde el catálogo de Lujo para realizar una consulta.')}`;
+        // TELEFONO DE LA TIENDA (Código de país + número, sin espacios ni símbolos "+")
+        // Ejemplo Nicaragua: "50588888888"
+        const WHATSAPP_PHONE = "50588888888"; 
+
+        // CONFIGURACIÓN DE MENSAJE GLOBAL (Para el botón flotante)
+        const GLOBAL_MESSAGE = "Hola, estoy visitando su catálogo online y me gustaría hacer una consulta.";
+
+        // LISTA DE PRODUCTOS (Fácil de editar en menos de 5 minutos)
+        const PRODUCTOS = [
+            {
+                id: 1,
+                nombre: "Smartwatch Ultra Series 9",
+                precio: 1450,
+                imagen: "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?auto=format&fit=crop&w=600&q=80",
+                badge: "🔥 Oferta",
+                meta: "Stock Limitado • Envío gratis"
+            },
+            {
+                id: 2,
+                nombre: "Auriculares Inalámbricos Pro",
+                precio: 850,
+                imagen: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+                badge: "⭐ Más vendido",
+                meta: "Calidad Premium de Audio"
+            },
+            {
+                id: 3,
+                nombre: "Gafas de Sol Aviador Black",
+                precio: 620,
+                imagen: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=600&q=80",
+                badge: "🚀 Nuevo",
+                meta: "Protección UV400 certificada"
+            },
+            {
+                id: 4,
+                nombre: "Perfume Bleu de Chanel Masculino",
+                precio: 3200,
+                imagen: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80",
+                badge: "💸 Rebaja",
+                meta: "100% Original Garantizado"
+            },
+            {
+                id: 5,
+                nombre: "Billetera Minimalista de Cuero",
+                precio: 450,
+                imagen: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80",
+                badge: "", // Sin etiqueta
+                meta: "Entrega Inmediata"
+            },
+            {
+                id: 6,
+                nombre: "Mochila Impermeable para Laptop",
+                precio: 1100,
+                imagen: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80",
+                badge: "⚡ Recomendado",
+                meta: "Con puerto de carga USB integrado"
+            }
+        ];
+
+        // FUNCIÓN PARA RENDERIZAR LOS PRODUCTOS AUTOMÁTICAMENTE
+        function cargarCatalogo() {
+            const grid = document.getElementById('grid-productos');
+            grid.innerHTML = ''; // Limpiar contenedor
+
+            PRODUCTOS.forEach(prod => {
+                // Generar mensaje personalizado para WhatsApp codificado para URL
+                const textoMensaje = encodeURIComponent(`Hola, quiero más información sobre el producto: *${prod.nombre}* (Precio: C$${prod.precio.toLocaleString()})`);
+                const urlWhatsapp = `https://wa.me/${WHATSAPP_PHONE}?text=${textoMensaje}`;
+
+                // Manejo de la etiqueta (Badge) si existe
+                const badgeHTML = prod.badge ? `<span class="badge">${prod.badge}</span>` : '';
+
+                // Estructura HTML de la tarjeta
+                const card = document.createElement('article');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="image-container">
+                        ${badgeHTML}
+                        <img class="product-image" src="${prod.imagen}" alt="${prod.nombre}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">${prod.nombre}</h2>
+                        <div class="product-meta">${prod.meta}</div>
+                        <div class="product-price">C$ ${prod.precio.toLocaleString()}</div>
+                        <a href="${urlWhatsapp}" target="_blank" class="btn-whatsapp">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.498 1.451 5.44 1.452 5.4 0 9.794-4.394 9.796-9.793 0-2.614-1.017-5.071-2.865-6.922-1.848-1.85-4.306-2.868-6.92-2.869-5.404 0-9.802 4.394-9.805 9.794-.001 1.97.514 3.893 1.496 5.493l-.992 3.623 3.714-.974zm11.232-4.13c-.302-.15-.1.79-.1.25s-.377-.425-.63-.55c-.252-.125-1.493-.615-1.953-.827-.46-.21-.794-.314-1.128.188-.334.502-1.296 1.632-1.589 1.966-.294.335-.588.376-.89.225-.302-.15-1.273-.47-2.425-1.494-.897-.8-1.502-1.787-1.678-2.088-.176-.302-.019-.465.13-.614.136-.135.302-.35.454-.526.15-.175.2-.301.302-.502.102-.2.05-.376-.025-.526-.075-.15-.627-1.512-.86-2.072-.226-.546-.477-.473-.654-.482t-.36-.01c-.127 0-.335.049-.512.242-.177.194-.675.66-0.675 1.608 0 .949.69 1.867.787 2.001.096.133 1.357 2.071 3.287 2.903.459.198.817.316 1.097.405.461.147.88.126 1.212.077.37-.055 1.128-.462 1.285-.908.156-.447.156-.831.109-.911-.048-.08-.176-.125-.478-.275z"/></svg>
+                            Consultar por WhatsApp
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Configurar el botón flotante global
+            const floatingWsp = document.getElementById('wsp-global');
+            floatingWsp.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(GLOBAL_MESSAGE)}`;
+        }
+
+        // Ejecutar carga al abrir la página
+        document.addEventListener('DOMContentLoaded', cargarCatalogo);
     </script>
 </body>
 </html>
